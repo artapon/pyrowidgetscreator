@@ -47,15 +47,26 @@
 						<tbody>
 							<tr>
 								<td>
-								<?php echo form_radio('example','',1); ?>&nbsp;
-								<label for="example"><?php echo lang('pyro_widgets_creator.basic_widgets_struture');?></label>
+									<?php echo form_radio('example','',1); ?>&nbsp;
+									<label for="example"><?php echo lang('pyro_widgets_creator.basic_widgets_struture');?></label>
 								</td>
-							</tr>
 							
-							<tr>
 								<td>
-								<?php echo form_radio('example','example'); ?>&nbsp;
-								<label for="example"><?php echo lang('pyro_widgets_creator.connect_folder_select');?></label>
+									<?php echo form_radio('example','c_folder'); ?>&nbsp;
+									<label for="example"><?php echo lang('pyro_widgets_creator.connect_folder_select');?></label>
+								</td>
+							
+								<td>
+									<?php echo form_radio('example','c_file'); ?>&nbsp;
+									<label for="example"><?php echo lang('pyro_widgets_creator.connect_file_select');?></label>
+								</td>
+								<td>
+									<?php echo form_radio('example','c_fancy_box'); ?>&nbsp;
+									<label for="example"><?php echo lang('pyro_widgets_creator.fancy_box');?></label>
+								</td>
+								<td>
+									<?php echo form_radio('example','c_slidejs'); ?>&nbsp;
+									<label for="example"><?php echo lang('pyro_widgets_creator.slide_js');?></label>
 								</td>
 							</tr>
 						</tbody>
