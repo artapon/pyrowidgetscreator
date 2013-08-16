@@ -55,6 +55,7 @@ class Admin extends Admin_Controller {
 		parent::__construct();
 		$this->load->library('form_validation');
 		$this->load->model('widgets_details_m');
+		$this->load->model('widgets_slidejs_m');
 		$this->lang->load('pyro_widgets_creator');
 	}
 	
@@ -97,8 +98,8 @@ class Admin extends Admin_Controller {
 					case "c_slidejs":
 						fwrite($widget_controller,$this->widgets_details_m->widget_slidejs($form_input));
 						fwrite($widget_form, $this->widgets_details_m->widget_form_detail());
-						fwrite($widget_display, $this->widgets_details_m->widgets_slidejs_display());
-						$this->move_file_slidejs($form_input['name'],$widget_path);
+						fwrite($widget_display, $this->widgets_slidejs_m->widgets_slidejs_display());
+						$this->move_file_slidejs($widget_path,'slidejs');
 					break;
 						
 					
@@ -133,13 +134,36 @@ class Admin extends Admin_Controller {
 			->build('admin/widgets/form');
 	}
 
-	public function move_file_slidejs($widget_name,$widget_path)
+	public function move_file_slidejs($widget_path,$lib_name)
 	{
-		copy(realpath(dirname(__FILE__) . '/..')."/libraries/slidejs/css/img/btns-next-prev.png",$widget_path."/css/img/btns-next-prev.png");
-		copy(realpath(dirname(__FILE__) . '/..')."/libraries/slidejs/css/img/pagination.png",$widget_path."/css/img/pagination.png");	
-		copy(realpath(dirname(__FILE__) . '/..')."/libraries/slidejs/css/sliderjs.css"			,$widget_path."/css/sliderjs.css");
-		copy(realpath(dirname(__FILE__) . '/..')."/libraries/slidejs/js/jquery.slides.min.js"   ,$widget_path."/js/jquery.slides.min.js");
+		$dir_img 		= realpath(dirname(__FILE__) . '/..')."/libraries/".$lib_name."/css/img/";
+		$to_img_dir  	= "\\css\\img\\";
+		$this->copy_files($dir_img,$to_img_dir,$widget_path);
+		$dir_css = realpath(dirname(__FILE__) . '/..')."/libraries/".$lib_name."/css/";
+		$to_css_dir = "\\css\\";
+		$this->copy_files($dir_css,$to_css_dir,$widget_path);
+		
+		$dir_js = realpath(dirname(__FILE__) . '/..')."/libraries/".$lib_name."/js/";
+		$to_js_dir = "\\js\\";
+		$this->copy_files($dir_js,$to_js_dir ,$widget_path);
+
 	}
+
+	public function copy_files($dir,$to_dir,$widget_path){
+		if ($handle = opendir($dir)) {
+        	while (false !== ($entry = readdir($handle))) {
+            	if ($entry != "." && $entry != "..") {
+            		if ( !is_dir($dir.$entry) ) {
+                		copy($dir.$entry,$widget_path.$to_dir.$entry);
+					}
+           	 	}
+        }
+        	closedir($handle);
+		}
+	}
+	
+	
+	
 
 
 }
